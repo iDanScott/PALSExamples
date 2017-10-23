@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <script language="javascript">
+        var ship;
+        var bullets = new Array();
+        var timer = setInterval(moveBullets, 100);
+
+        function moveBullets() {
+            for (var i = 0; i < bullets.length; i++) {
+                console.log("test");
+                if (parseInt(bullets[i].style.top) > 0) {
+                    bullets[i].style.top = parseInt(bullets[i].style.top, 10) - 15 + "px";
+                }
+            }
+        }
+
+        function initalise() {
+            ship = document.getElementById("ship");
+            ship.style.left = "0px";
+            ship.style.width = "150px";
+            ship.style.height = "150px";
+            ship.style.top = window.innerHeight - (ship.height + 10) + "px";
+        }
+
+        function btnLeft_onClick() {
+            ship.style.left = (parseInt(ship.style.left, 10) - 10) + "px";
+        }
+
+        function btnRight_onClick() {
+            ship.style.left = (parseInt(ship.style.left, 10) + 10) + "px";
+        }
+
+        function btnFire_onClick() {
+            var bullet = document.createElement("img");
+            bullet.src = "bullet.jpg";
+            bullet.style.position = "absolute";
+            bullet.style.left = parseInt(ship.style.left, 10) + (parseInt(ship.style.width, 10) / 2) + "px";
+            bullet.style.top = ship.style.top;
+            bullet.style.width = "20px";
+            bullet.style.height = "20px";
+            bullets.push(bullet);
+
+            var bulletsDiv = document.getElementById("bullets");
+            bulletsDiv.appendChild(bullet);
+        }
+    </script>
+    <style>
+        #ship {
+            width:150px;
+            height:250px;
+            position:absolute;
+            left:0;
+        }
+    </style>
+</head>
+<body onload="initalise()">
+    <input id="btnLeft" onclick="btnLeft_onClick()" type="button" value="<-" />
+    <input id="btnRight" onclick="btnRight_onClick()" type="button" value="->" />
+    <input id="btnFire" onclick="btnFire_onClick()" type="button" value="Fire!" />
+    <img id="ship" src="ship.jpg" />
+    <div id="bullets">
+
+    </div>
+</body>
+</html>

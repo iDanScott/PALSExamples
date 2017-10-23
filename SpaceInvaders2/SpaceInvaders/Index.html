@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <script language="javascript">
+        var ship;
+        var bullets = new Array();
+        var timer = setInterval(moveBullets, 10);
+
+        function moveBullets() {
+            for (var i = 0; i < bullets.length; i++) {
+                if (parseInt(bullets[i].style.top) > 0) {
+                    bullets[i].style.top = parseInt(bullets[i].style.top, 10) - 15 + "px";
+                }
+            }
+        }
+
+        function initalise() {
+            ship = document.getElementById("ship");
+            ship.style.left = "0px";
+            ship.style.width = "150px";
+            ship.style.height = "150px";
+            
+            document.body.style.height = parseInt(window.innerHeight,10) - 20 + "px";
+            document.body.style.width = parseInt(window.innerWidth, 10) - 20 + "px";
+
+            ship.style.top = window.innerHeight - (ship.height + 10) + "px";
+        }
+
+        function btnLeft_onClick() {
+            ship.style.left = (parseInt(ship.style.left, 10) - 10) + "px";
+        }
+
+        function btnRight_onClick() {
+            ship.style.left = (parseInt(ship.style.left, 10) + 10) + "px";
+        }
+
+        function btnFire_onClick() {
+            var bullet = document.createElement("img");
+            bullet.src = "bullet.jpg";
+            bullet.style.position = "absolute";
+            bullet.style.left = parseInt(ship.style.left, 10) + (parseInt(ship.style.width, 10) / 2) + "px";
+            bullet.style.top = ship.style.top;
+            bullet.style.width = "20px";
+            bullet.style.height = "20px";
+            bullets.push(bullet);
+
+            var bulletsDiv = document.getElementById("bullets");
+            bulletsDiv.appendChild(bullet);
+        }
+
+        function body_MouseMove(event) {
+            console.log(event.clientX);
+            ship.style.left = parseInt(event.clientX) - (parseInt(ship.style.width) / 2) + "px";
+            if (parseInt(ship.style.left) + parseInt(ship.style.width) > parseInt(document.body.style.width)) {
+                ship.style.left = parseInt(document.body.style.width) - parseInt(ship.style.width) + "px";
+            } else if (parseInt(ship.style.left) < 0) {
+                ship.style.left = "0px";
+            }
+        }
+
+        function body_MouseDown(event) {
+            var bullet = document.createElement("img");
+            bullet.src = "bullet.jpg";
+            bullet.style.position = "absolute";
+            bullet.style.left = parseInt(ship.style.left, 10) + (parseInt(ship.style.width, 10) / 2) + "px";
+            bullet.style.top = ship.style.top;
+            bullet.style.width = "20px";
+            bullet.style.height = "20px";
+            bullets.push(bullet);
+
+            var bulletsDiv = document.getElementById("bullets");
+            bulletsDiv.appendChild(bullet);
+        }
+    </script>
+    <style>
+        #ship {
+            width:150px;
+            height:250px;
+            position:absolute;
+            left:0;
+        }
+    </style>
+</head>
+<body onload="initalise()" onmousemove="body_MouseMove(event)" onmousedown="body_MouseDown(event)">
+    <input id="btnLeft" onclick="btnLeft_onClick()" type="button" value="<-" />
+    <input id="btnRight" onclick="btnRight_onClick()" type="button" value="->" />
+    <input id="btnFire" onclick="btnFire_onClick()" type="button" value="Fire!" />
+    <img id="ship" src="ship.jpg" />
+    <div id="bullets">
+
+    </div>
+</body>
+</html>
